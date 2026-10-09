@@ -1,0 +1,98 @@
+/* Palette, chart styling and small motion. Tailwind (css/tailwind.css) handles layout and spacing.
+   Change the whole look by editing the tokens below. */
+:root {
+  --bg: #f7f3f1;          /* blush-tinted white */
+  --surface: #fdfbfa;
+  --raised: #efe6e2;
+  --fg: #26362e;          /* deep green-charcoal */
+  --muted: #67736c;
+  --line: #e3dad6;
+  --accent: #5b7d68;      /* sage */
+  --accent-ink: #ffffff;
+  --flag: #b04a62;        /* deeper rose, used for flags in the demo */
+  --blush: #f5c9cf;
+  --blush-soft: #fbebec;
+  --butter: #f7e7a9;
+  --butter-soft: #fcf5d9;
+  --band: rgba(91, 125, 104, 0.16);
+  color-scheme: light;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { background: var(--bg); color: var(--fg); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { text-wrap: balance; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.nav-link[aria-current='true'] { color: var(--fg); box-shadow: inset 0 -1px 0 var(--fg); }
+
+/* hero status dot */
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); position: relative; }
+.live-dot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid var(--accent); animation: ping 2.4s ease-out infinite; }
+@keyframes ping { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(3); opacity: 0; } }
+
+/* ticker */
+.ticker { overflow: hidden; background: var(--fg); }
+.ticker-track { display: flex; width: max-content; animation: slide 60s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+.ticker-track span { white-space: nowrap; padding: 14px 24px; font-size: 14px; color: var(--blush); letter-spacing: 0.02em; }
+.ticker-track span::after { content: '·'; margin-left: 48px; color: var(--butter); }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* threshold chart */
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: Jost, system-ui, sans-serif; font-size: 11.5px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+.chart .grid-line { stroke: var(--line); stroke-width: 1; }
+.chart .band { fill: var(--band); }
+.chart .budget { fill: none; stroke: var(--muted); stroke-width: 1.4; stroke-dasharray: 4 5; }
+.chart .actual { fill: none; stroke: var(--fg); stroke-width: 2; stroke-linejoin: round; }
+.chart .dot { fill: var(--surface); stroke: var(--fg); stroke-width: 1.8; }
+.chart .dot.flag { fill: var(--flag); stroke: var(--flag); }
+.chart .dot.sel { stroke: var(--fg); stroke-width: 3; }
+.chart .hit { fill: transparent; cursor: pointer; }
+.chart .pulse { fill: none; stroke: var(--flag); stroke-width: 1.8; animation: pulse 2.4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pulse { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(2.6); opacity: 0; } }
+.legend-line { display: inline-block; width: 18px; border-top: 2px solid var(--fg); vertical-align: middle; margin-right: 6px; }
+.legend-line.dashed { border-top: 2px dashed var(--muted); }
+.legend-line.band { height: 10px; border: 0; background: var(--band); outline: 1px solid var(--accent); }
+input[type='range'] { accent-color: var(--accent); }
+
+/* readouts */
+.readout .drv { color: var(--accent); }
+.readout .pend { color: var(--flag); }
+.verdict .label { background: var(--band); outline: 1px solid var(--accent); border-radius: 4px; padding: 0 4px; }
+.verdict .bad { color: var(--flag); font-weight: 500; }
+.verdict .good { color: var(--accent); font-weight: 500; }
+.marked { background: linear-gradient(transparent 60%, var(--butter) 60%); font-weight: 500; padding-inline: 2px; }
+
+/* chips and buttons */
+.chip { border: 1px solid var(--line); border-radius: 999px; padding: 6px 16px; font-size: 14px; cursor: pointer; background: transparent; color: var(--fg); transition: border-color 0.2s, background 0.2s; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); padding: 10px 24px; font-size: 15px; letter-spacing: 0.02em; cursor: pointer; transition: background 0.2s, color 0.2s; }
+.btn:hover { background: transparent; color: var(--accent); }
+.btn.ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* project cards */
+.card { border-top: 4px solid var(--accent); transition: border-color 0.2s, transform 0.2s; }
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+/* project detail dialog */
+dialog.project { background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 22px; padding: 0; width: min(760px, calc(100vw - 32px)); max-height: calc(100vh - 48px); }
+dialog.project::backdrop { background: rgba(37, 48, 42, 0.5); }
+dialog.project[open] { animation: pop 0.2s ease-out; }
+@keyframes pop { from { transform: translateY(10px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+[hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .ticker { overflow-x: auto; }
+}
+
+/* handwritten notes */
+.hand { font-family: 'Caveat', cursive; color: var(--accent); line-height: 1; }
+
+/* card accent colours cycle through the palette */
+#grid .card:nth-child(3n+2) { border-top-color: var(--blush); }
+#grid .card:nth-child(3n) { border-top-color: var(--butter); }
+.hero-wash { background: linear-gradient(180deg, var(--blush-soft), var(--bg)); }

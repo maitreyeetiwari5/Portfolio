@@ -1,0 +1,13 @@
+{
+  "name": "maitreyee-tiwari-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static portfolio for GitHub Pages, styled with Tailwind CSS.",
+  "scripts": {
+    "build": "tailwindcss -c tailwind.config.js -i src/input.css -o css/tailwind.css --minify",
+    "watch": "tailwindcss -c tailwind.config.js -i src/input.css -o css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}
